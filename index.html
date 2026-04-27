@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFlow — AI Task Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<header>
+    <div class="logo">FocusFlow<span class="logo-dot">.</span></div>
+    <div class="header-status">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">Connecting...</span>
+    </div>
+</header>
+<main>
+
+    <section class="panel panel-left">
+
+        <div class="camera-wrap">
+            <video id="cameraFeed" autoplay playsinline muted></video>
+            <canvas id="snapCanvas" style="display:none"></canvas>
+            <div class="camera-overlay">
+                <div class="scan-line"></div>
+                <div class="corner tl"></div>
+                <div class="corner tr"></div>
+                <div class="corner bl"></div>
+                <div class="corner br"></div>
+            </div>
+            <div id="cameraError" class="camera-error" style="display:none">
+                ⚠ Camera access denied.<br>Allow camera to use FocusFlow.
+            </div>
+        </div>
+
+       
+        <div class="state-card" id="stateCard">
+            <div class="state-label">CURRENT STATE</div>
+            <div class="state-value" id="stateValue">—</div>
+            <div class="state-reason" id="stateReason">Waiting for camera analysis...</div>
+
+            <div class="state-metrics">
+                <div class="metric">
+                    <span class="metric-label">EAR</span>
+                    <span class="metric-value" id="metricEar">—</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">YAW</span>
+                    <span class="metric-value" id="metricYaw">—</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">FACE</span>
+                    <span class="metric-value" id="metricFace">—</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="analyze-btn" id="analyzeBtn" onclick="analyzeNow()">
+            <span class="btn-icon">◉</span> Analyze Now
+        </button>
+
+    </section>
+
+    <section class="panel panel-center">
+
+        <div class="suggestion-header">RIGHT NOW, DO THIS</div>
+
+        <div class="suggestion-card" id="suggestionCard">
+            <div class="suggestion-empty" id="suggestionEmpty">
+                Add tasks and start the camera to get your first suggestion.
+            </div>
+            <div class="suggestion-content" id="suggestionContent" style="display:none">
+                <div class="suggestion-diff" id="suggestionDiff">—</div>
+                <div class="suggestion-task" id="suggestionTask">—</div>
+                <div class="suggestion-reason" id="suggestionReason">—</div>
+                <button class="done-btn" id="doneBtn" onclick="markDone()">
+                    ✓ Mark Complete
+                </button>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-title">HOW IT WORKS</div>
+            <div class="legend-row"><span class="leg-state focused">FOCUSED</span><span class="leg-arrow">→</span><span class="leg-diff hard">HARD TASK</span></div>
+            <div class="legend-row"><span class="leg-state tired">TIRED</span><span class="leg-arrow">→</span><span class="leg-diff easy">EASY TASK</span></div>
+            <div class="legend-row"><span class="leg-state distracted">DISTRACTED</span><span class="leg-arrow">→</span><span class="leg-diff easy">EASY TASK</span></div>
+        </div>
+
+    </section>
+
+  
+    <section class="panel panel-right">
+
+        <div class="panel-title">TASK LIST</div>
+
+        <div class="add-form">
+            <input type="text" id="taskInput" placeholder="What needs to be done?" maxlength="80">
+            <div class="diff-selector">
+                <button class="diff-btn" data-diff="easy" onclick="selectDiff('easy')">Easy</button>
+                <button class="diff-btn active" data-diff="medium" onclick="selectDiff('medium')">Medium</button>
+                <button class="diff-btn" data-diff="hard" onclick="selectDiff('hard')">Hard</button>
+            </div>
+            <button class="add-btn" onclick="addTask()">+ Add Task</button>
+        </div>
+
+        <!-- Task list -->
+        <div id="taskList" class="task-list"></div>
+
+        <!-- Dashboard link -->
+        <a href="dashboard.html" class="dash-link">View Productivity Dashboard →</a>
+
+    </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
