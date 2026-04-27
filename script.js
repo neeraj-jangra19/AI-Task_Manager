@@ -1,4 +1,4 @@
-const API = "https://ai-task-manager-q7t6.onrender.com";
+const API = "https://ai-task-manager-backend-uacc.onrender.com";
 
 let videoStream = null;
 let currentSuggestion = null;
